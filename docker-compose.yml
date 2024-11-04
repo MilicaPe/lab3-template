@@ -1,4 +1,3 @@
-version: "3"
 services:
   postgres:
     image: library/postgres:13
@@ -7,7 +6,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: "postgres"
-      POSTGRES_DB: postgres
+      POSTGRES_DB: reservations, payments, loyalties
     volumes:
       - db-data:/var/lib/postgresql/data
       - ./postgres/:/docker-entrypoint-initdb.d/
