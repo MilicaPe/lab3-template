@@ -12,8 +12,77 @@ services:
       - ./postgres/:/docker-entrypoint-initdb.d/
     ports:
       - "5432:5432"
+    networks:
+      - backend
 
-# TODO добавить сервисы
+  redis:
+    image: redis:alpine
+    container_name: redis
+    restart: on-failure
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis-data:/data
+    networks:
+      - backend
+
+  # TODO добавить сервисы
+  loyalty:
+    restart: always
+    build: ./loyalty
+    ports:
+      - "8050:8050"
+    networks:
+      - backend
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres:5432/loyalties"
+      JAVA_OPTS: "-Xmx512m"
+
+  payment:
+    restart: always
+    build: ./payment
+    ports:
+      - "8060:8060"
+    networks:
+      - backend
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres:5432/payments"
+      JAVA_OPTS: "-Xmx512m"
+
+  reservation:
+    restart: always
+    build: ./reservation
+    ports:
+      - "8070:8070"
+    networks:
+      - backend
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres:5432/reservations"
+      JAVA_OPTS: "-Xmx512m"
+
+  gate:
+    restart: always
+    build: ./gateway
+    ports:
+      - "8080:8080"
+    networks:
+      - backend
+    depends_on:
+      - postgres
+      - redis
+      - loyalty
+      - payment
+      - reservation
+
+networks:
+  backend:
+    driver: bridge
 
 volumes:
   db-data:

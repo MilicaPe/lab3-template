@@ -3,9 +3,9 @@ package com.example.gateway.controller;
 
 import com.example.gateway.dto.CreateReservationRequest;
 import com.example.gateway.dto.CreateReservationResponse;
+import com.example.gateway.dto.LoyaltyException;
 import com.example.gateway.dto.ReservationResponseDTO;
-import com.example.gateway.dto.error.ErrorResponse;
-import com.example.gateway.dto.error.ValidationErrorResponse;
+import com.example.gateway.dto.error.*;
 import com.example.gateway.service.ReservationService;
 import com.example.gateway.service.ReservationServiceLogic;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +31,8 @@ public class ReservationController {
             return ResponseEntity.status(200).body(result);
         }catch (ErrorResponse e) {
             return ResponseEntity.status(404).body(e);
+        }catch (ReservationServiceException e){
+            return ResponseEntity.status(503).body(new ErrorResponse("Reservation Service unavailable"));
         }
     }
 
@@ -41,6 +43,12 @@ public class ReservationController {
             return ResponseEntity.status(200).body(response);
         }catch (ValidationErrorResponse e){
             return ResponseEntity.status(400).body(e);
+        }catch (ReservationServiceException e){
+            return ResponseEntity.status(503).body(new ErrorResponse("Reservation Service unavailable"));
+        }catch (LoyaltyServiceException| LoyaltyException e){
+            return ResponseEntity.status(503).body(new ErrorResponse("Loyalty Service unavailable"));
+        }catch(PaymentServiceException e){
+            return ResponseEntity.status(503).body(new ErrorResponse("Payment Service unavailable"));
         }
     }
 
@@ -51,6 +59,10 @@ public class ReservationController {
             return ResponseEntity.status(204).build();
         } catch (ErrorResponse e) {
             return ResponseEntity.status(404).body(e);
+        }catch (PaymentServiceException e){
+            return ResponseEntity.status(503).body(new ErrorResponse("Payment Service unavailable"));
+        }catch (LoyaltyException e){
+            return ResponseEntity.status(204).build();
         }
 
     }

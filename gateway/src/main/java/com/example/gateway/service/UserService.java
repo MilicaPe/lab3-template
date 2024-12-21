@@ -1,6 +1,9 @@
 package com.example.gateway.service;
 
 import com.example.gateway.dto.*;
+import com.example.gateway.dto.error.LoyaltyServiceException;
+import com.example.gateway.dto.error.PaymentServiceException;
+import com.example.gateway.dto.error.ReservationServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -26,42 +29,56 @@ public class UserService {
     @Autowired
     LoyaltyService loyaltyService;
 
-    public UserInfoResponseDTO getUserInfo(String username) throws URISyntaxException {
+    @Autowired
+    ReservationService reservationService;
+
+    public UserInfoResponseDTO getUserInfo(String username) throws URISyntaxException, ReservationServiceException {
         System.out.println(" Stigao na gateway");
-        LoyaltyInfoResponseDTO loyalty = loyaltyService.getLoyaltyForUser(username);
         List<ReservationResponseDTO> reservations = getReservationsDTOForUser(username);
-        return new UserInfoResponseDTO(reservations, loyalty);
+        LoyaltyInfoResponseDTO loyalty;
+        try {
+            loyalty = loyaltyService.getLoyaltyForUser(username);
+            return new UserInfoResponseDTO(reservations, loyalty);
+        } catch (LoyaltyServiceException e) {
+            return new UserInfoResponseDTO(reservations);
+        }
     }
 
-    public List<ReservationResponseDTO> getReservationsDTOForUser(String username) throws URISyntaxException {
-        List<ReservationResponseDTO> reservations = getReservationsForUser(username);
+    public List<ReservationResponseDTO> getReservationsDTOForUser(String username) throws URISyntaxException, ReservationServiceException {
+        List<ReservationResponseDTO> reservations = reservationService.getReservationsForUser(username);
         this.setPaymentForReservations(reservations);
         return reservations;
     }
 
 
 
-    private List<ReservationResponseDTO> getReservationsForUser(String username) throws URISyntaxException {
-        URI uri = new URI(this.basicReservation.toString() + "/reservation");      // +username);
-        System.out.println(uri.toString());
-        RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("X-User-Name", username);
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity entity = new HttpEntity(headers);
-        ResponseEntity<ArrayList<ReservationResponseDTO>> result = restTemplate.exchange(
-                uri,
-                HttpMethod.GET,
-                entity,
-                new ParameterizedTypeReference<>() {});
-        System.out.println(result.getBody());
-        System.out.println(result);
-        return result.getBody();
-    }
+//    private List<ReservationResponseDTO> getReservationsForUser(String username) throws URISyntaxException {
+//
+//
+//        URI uri = new URI(this.basicReservation.toString() + "/reservation");      // +username);
+//        System.out.println(uri.toString());
+//        RestTemplate restTemplate = new RestTemplate();
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.add("X-User-Name", username);
+//        headers.setContentType(MediaType.APPLICATION_JSON);
+//        HttpEntity entity = new HttpEntity(headers);
+//        ResponseEntity<ArrayList<ReservationResponseDTO>> result = restTemplate.exchange(
+//                uri,
+//                HttpMethod.GET,
+//                entity,
+//                new ParameterizedTypeReference<>() {});
+//        System.out.println(result.getBody());
+//        System.out.println(result);
+//        return result.getBody();
+//    }
 
     private void setPaymentForReservations(List<ReservationResponseDTO> reservations) throws URISyntaxException {
         for(ReservationResponseDTO r: reservations){
-            r.setPayment(paymentService.getPaymentInfo(r.getPaymentUid()));
+            try {
+                r.setPayment(paymentService.getPaymentInfo(r.getPaymentUid()));
+            }catch (PaymentServiceException e){
+                r.setPayment(null);
+            }
         }
     }
 

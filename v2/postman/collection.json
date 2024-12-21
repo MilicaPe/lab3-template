@@ -250,7 +250,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"hotelUid\": \"{{hotelUid}}\",\n    \"startDate\": \"2021-10-08\",\n    \"endDate\": \"2021-10-11\"\n}"
+							"raw": "{\n    \"hotelUid\": \"{{hotelUid}}\",\n    \"startDate\": \"2024-12-28\",\n    \"endDate\": \"2024-12-31\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/api/v1/reservations",
@@ -284,7 +284,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"hotelUid\": \"{{hotelUid}}\",\n    \"startDate\": \"2021-10-08\",\n    \"endDate\": \"2021-10-11\"\n}",
+									"raw": "{\n    \"hotelUid\": \"{{hotelUid}}\",\n    \"startDate\": \"2024-12-28\",\n    \"endDate\": \"2024-12-31\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -313,7 +313,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"reservationUid\": \"9b4ba1f7-e5ac-465b-ace4-7b54dec20f9a\",\n    \"hotelUid\": \"049161bb-badd-4fa8-9d90-87c9a82b0668\",\n    \"startDate\": \"2021-10-08\",\n    \"endDate\": \"2021-10-11\",\n    \"discount\": 10,\n    \"status\": \"PAID\",\n    \"payment\": {\n        \"status\": \"PAID\",\n        \"price\": 27000\n    }\n}"
+							"body": "{\n    \"reservationUid\": \"9b4ba1f7-e5ac-465b-ace4-7b54dec20f9a\",\n    \"hotelUid\": \"049161bb-badd-4fa8-9d90-87c9a82b0668\",\n    \"startDate\": \"2024-12-28\",\n    \"endDate\": \"2024-12-31\",\n    \"discount\": 10,\n    \"status\": \"PAID\",\n    \"payment\": {\n        \"status\": \"PAID\",\n        \"price\": 27000\n    }\n}"
 						}
 					]
 				},
@@ -429,7 +429,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"reservationUid\": \"9b4ba1f7-e5ac-465b-ace4-7b54dec20f9a\",\n    \"hotel\": {\n        \"hotelUid\": \"049161bb-badd-4fa8-9d90-87c9a82b0668\",\n        \"name\": \"Ararat Park Hyatt Moscow\",\n        \"fullAddress\": \"Россия, Москва, Неглинная ул., 4\",\n        \"stars\": 5\n    },\n    \"startDate\": \"2021-10-08\",\n    \"endDate\": \"2021-10-11\",\n    \"status\": \"PAID\",\n    \"payment\": {\n        \"status\": \"PAID\",\n        \"price\": 27000\n    }\n}"
+							"body": "{\n    \"reservationUid\": \"9b4ba1f7-e5ac-465b-ace4-7b54dec20f9a\",\n    \"hotel\": {\n        \"hotelUid\": \"049161bb-badd-4fa8-9d90-87c9a82b0668\",\n        \"name\": \"Ararat Park Hyatt Moscow\",\n        \"fullAddress\": \"Россия, Москва, Неглинная ул., 4\",\n        \"stars\": 5\n    },\n    \"startDate\": \"2024-12-28\",\n    \"endDate\": \"2024-12-31\",\n    \"status\": \"PAID\",\n    \"payment\": {\n        \"status\": \"PAID\",\n        \"price\": 27000\n    }\n}"
 						}
 					]
 				},
@@ -532,7 +532,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "[\n    {\n        \"reservationUid\": \"9b4ba1f7-e5ac-465b-ace4-7b54dec20f9a\",\n        \"hotel\": {\n            \"hotelUid\": \"049161bb-badd-4fa8-9d90-87c9a82b0668\",\n            \"name\": \"Ararat Park Hyatt Moscow\",\n            \"fullAddress\": \"Россия, Москва, Неглинная ул., 4\",\n            \"stars\": 5\n        },\n        \"startDate\": \"2021-10-08\",\n        \"endDate\": \"2021-10-11\",\n        \"status\": \"PAID\",\n        \"payment\": {\n            \"status\": \"PAID\",\n            \"price\": 27000\n        }\n    }\n]"
+							"body": "[\n    {\n        \"reservationUid\": \"9b4ba1f7-e5ac-465b-ace4-7b54dec20f9a\",\n        \"hotel\": {\n            \"hotelUid\": \"049161bb-badd-4fa8-9d90-87c9a82b0668\",\n            \"name\": \"Ararat Park Hyatt Moscow\",\n            \"fullAddress\": \"Россия, Москва, Неглинная ул., 4\",\n            \"stars\": 5\n        },\n        \"startDate\": \"2024-12-28\",\n        \"endDate\": \"2024-12-31\",\n        \"status\": \"PAID\",\n        \"payment\": {\n            \"status\": \"PAID\",\n            \"price\": 27000\n        }\n    }\n]"
 						}
 					]
 				},
@@ -640,7 +640,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"reservations\": [\n        {\n            \"reservationUid\": \"9b4ba1f7-e5ac-465b-ace4-7b54dec20f9a\",\n            \"hotel\": {\n                \"hotelUid\": \"049161bb-badd-4fa8-9d90-87c9a82b0668\",\n                \"name\": \"Ararat Park Hyatt Moscow\",\n                \"fullAddress\": \"Россия, Москва, Неглинная ул., 4\",\n                \"stars\": 5\n            },\n            \"startDate\": \"2021-10-08\",\n            \"endDate\": \"2021-10-11\",\n            \"status\": \"PAID\",\n            \"payment\": {\n                \"status\": \"PAID\",\n                \"price\": 27000\n            }\n        }\n    ],\n    \"loyalty\": {\n        \"status\": \"GOLD\",\n        \"discount\": 10\n    }\n}"
+							"body": "{\n    \"reservations\": [\n        {\n            \"reservationUid\": \"9b4ba1f7-e5ac-465b-ace4-7b54dec20f9a\",\n            \"hotel\": {\n                \"hotelUid\": \"049161bb-badd-4fa8-9d90-87c9a82b0668\",\n                \"name\": \"Ararat Park Hyatt Moscow\",\n                \"fullAddress\": \"Россия, Москва, Неглинная ул., 4\",\n                \"stars\": 5\n            },\n            \"startDate\": \"2024-12-28\",\n            \"endDate\": \"2024-12-31\",\n            \"status\": \"PAID\",\n            \"payment\": {\n                \"status\": \"PAID\",\n                \"price\": 27000\n            }\n        }\n    ],\n    \"loyalty\": {\n        \"status\": \"GOLD\",\n        \"discount\": 10\n    }\n}"
 						}
 					]
 				},
@@ -1028,7 +1028,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"hotelUid\": \"{{hotelUid}}\",\n    \"startDate\": \"2021-10-08\",\n    \"endDate\": \"2021-10-11\"\n}"
+									"raw": "{\n    \"hotelUid\": \"{{hotelUid}}\",\n    \"startDate\": \"2024-12-28\",\n    \"endDate\": \"2024-12-31\"\n}"
 								},
 								"url": {
 									"raw": "{{baseUrl}}/api/v1/reservations",
@@ -1161,7 +1161,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"hotelUid\": \"{{hotelUid}}\",\n    \"startDate\": \"2021-10-08\",\n    \"endDate\": \"2021-10-11\"\n}"
+									"raw": "{\n    \"hotelUid\": \"{{hotelUid}}\",\n    \"startDate\": \"2024-12-28\",\n    \"endDate\": \"2022-12-31\"\n}"
 								},
 								"url": {
 									"raw": "{{baseUrl}}/api/v1/reservations",

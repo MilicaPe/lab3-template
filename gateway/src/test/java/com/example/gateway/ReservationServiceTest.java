@@ -1,8 +1,7 @@
 package com.example.gateway;
 
 import com.example.gateway.dto.*;
-import com.example.gateway.dto.error.ErrorResponse;
-import com.example.gateway.dto.error.ValidationErrorResponse;
+import com.example.gateway.dto.error.*;
 import com.example.gateway.service.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Order;
@@ -25,8 +24,6 @@ import static org.mockito.Mockito.*;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ReservationServiceTest {
 
-    @Mock
-    private HotelService hotelService;
     @Mock
     private PaymentService paymentService;
     @Mock
@@ -84,9 +81,9 @@ public class ReservationServiceTest {
 
     @Order(1)
     @Test
-    public void saveReservationTest() throws URISyntaxException, ValidationErrorResponse {
-        when(hotelService.isHotelExist(hotelUid)).thenReturn(true);
-        when(hotelService.getHotelPrice(hotelUid)).thenReturn(10000.0);
+    public void saveReservationTest() throws URISyntaxException, ValidationErrorResponse, LoyaltyServiceException, ReservationServiceException, PaymentServiceException, LoyaltyException {
+        when(reservationService.isHotelExist(hotelUid)).thenReturn(true);
+        when(reservationService.getHotelPrice(hotelUid)).thenReturn(10000.0);
         when(loyaltyService.getLoyaltyForUser(username)).thenReturn(loyalty);
         when(loyaltyService.getDiscountForStatus(loyaltyStatus)).thenReturn(discount);
         when(paymentService.saveNewPayment(new PaymentInfoDTO("PAID", 27000)))
@@ -106,8 +103,8 @@ public class ReservationServiceTest {
         assertEquals(price, responseFromFun.getPayment().getPrice());
         assertEquals(startDate, responseFromFun.getStartDate());
         assertEquals(endDate, responseFromFun.getEndDate());
-        verify(hotelService, times(1)).isHotelExist(hotelUid);
-        verify(hotelService, times(1)).getHotelPrice(hotelUid);
+        verify(reservationService, times(1)).isHotelExist(hotelUid);
+        verify(reservationService, times(1)).getHotelPrice(hotelUid);
         verify(loyaltyService, times(1)).getLoyaltyForUser(username);
         verify(paymentService, times(1)).saveNewPayment(payment);
         verify(reservationService, times(1)).saveReservation(reservationDTO, username);
@@ -115,39 +112,39 @@ public class ReservationServiceTest {
 
     @Order(2)
     @Test
-    public void saveReservationHotelNotExistTest() throws URISyntaxException {
-        when(hotelService.isHotelExist(hotelUid)).thenReturn(false);
+    public void saveReservationHotelNotExistTest() throws URISyntaxException, ReservationServiceException {
+        when(reservationService.isHotelExist(hotelUid)).thenReturn(false);
         ValidationErrorResponse thrown = assertThrows(ValidationErrorResponse.class, () -> {
             reservationServiceLogic.makeReservation(username, request);
         });
         assertEquals("Hotel is not exist", thrown.getMessage());
-        verify(hotelService, times(1)).isHotelExist(hotelUid);
-        verify(hotelService, times(0)).getHotelPrice(hotelUid);
+        verify(reservationService, times(1)).isHotelExist(hotelUid);
+        verify(reservationService, times(0)).getHotelPrice(hotelUid);
     }
 
     @Order(3)
     @Test
-    public void saveReservationStartDateIsBeforeEndDate() throws URISyntaxException {
+    public void saveReservationStartDateIsBeforeEndDate() throws URISyntaxException, ReservationServiceException {
         ValidationErrorResponse thrown = assertThrows(ValidationErrorResponse.class, () -> {
             reservationServiceLogic.makeReservation(username, requestStartEndDate);
         });
         assertEquals("End date is before start date", thrown.getMessage());
-        verify(hotelService, times(0)).getHotelPrice(hotelUid);
+        verify(reservationService, times(0)).getHotelPrice(hotelUid);
     }
 
     @Order(4)
     @Test
-    public void saveReservationStartDatesInPast() throws URISyntaxException {
+    public void saveReservationStartDatesInPast() throws URISyntaxException, ReservationServiceException {
         ValidationErrorResponse thrown = assertThrows(ValidationErrorResponse.class, () -> {
             reservationServiceLogic.makeReservation(username, requestDatesInPast);
         });
         assertEquals("Dates are in the past", thrown.getMessage());
-        verify(hotelService, times(0)).getHotelPrice(hotelUid);
+        verify(reservationService, times(0)).getHotelPrice(hotelUid);
     }
 
     @Order(4)
     @Test
-    public void deleteReservation() throws URISyntaxException, ErrorResponse {
+    public void deleteReservation() throws URISyntaxException, ErrorResponse, LoyaltyException, PaymentServiceException {
         when(reservationService.deleteReservationForUser(username, reservationUid)).thenReturn(reservationDTOdelete);
         Boolean result = reservationServiceLogic.deleteReservation(username, reservationUid);
         assertEquals(true, result);
