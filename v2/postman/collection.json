@@ -1161,7 +1161,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"hotelUid\": \"{{hotelUid}}\",\n    \"startDate\": \"2024-12-28\",\n    \"endDate\": \"2022-12-31\"\n}"
+									"raw": "{\n    \"hotelUid\": \"{{hotelUid}}\",\n    \"startDate\": \"2024-12-28\",\n    \"endDate\": \"2024-12-31\"\n}"
 								},
 								"url": {
 									"raw": "{{baseUrl}}/api/v1/reservations",
