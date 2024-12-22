@@ -90,6 +90,7 @@ public class LoyaltyService {
 
     public LoyaltyInfoResponseDTO subtractBooking(String username) throws URISyntaxException, LoyaltyServiceException, LoyaltyException {
         if(!this.loyaltyCircuitBreaker.allowRequest()) {
+            System.out.println("Ne da CB");
             throw new LoyaltyException();
         }
         try {

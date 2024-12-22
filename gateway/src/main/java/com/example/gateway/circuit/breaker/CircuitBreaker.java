@@ -16,8 +16,8 @@ public class CircuitBreaker {
     }
 
     private int failureCount = 0;
-    private final int failureThreshold = 3;
-    private Duration timeout = Duration.ofSeconds(3);
+    private final int failureThreshold = 10;
+    private Duration timeout = Duration.ofSeconds(1);
     private LocalDateTime lastAttemptTime;
     private State state;
 
@@ -47,6 +47,8 @@ public class CircuitBreaker {
 
     public Boolean allowRequest(){
         if(state==State.OPEN){
+            System.out.println("RAZLIKA od poslednjeg poziva");
+            System.out.println(Duration.between(LocalDateTime.now(), lastAttemptTime).compareTo(timeout));
             if(Duration.between(LocalDateTime.now(), lastAttemptTime).compareTo(timeout) >= 0){
                 state = State.HALF_OPEN;
                 return true;

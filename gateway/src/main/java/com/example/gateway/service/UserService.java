@@ -52,26 +52,6 @@ public class UserService {
 
 
 
-//    private List<ReservationResponseDTO> getReservationsForUser(String username) throws URISyntaxException {
-//
-//
-//        URI uri = new URI(this.basicReservation.toString() + "/reservation");      // +username);
-//        System.out.println(uri.toString());
-//        RestTemplate restTemplate = new RestTemplate();
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.add("X-User-Name", username);
-//        headers.setContentType(MediaType.APPLICATION_JSON);
-//        HttpEntity entity = new HttpEntity(headers);
-//        ResponseEntity<ArrayList<ReservationResponseDTO>> result = restTemplate.exchange(
-//                uri,
-//                HttpMethod.GET,
-//                entity,
-//                new ParameterizedTypeReference<>() {});
-//        System.out.println(result.getBody());
-//        System.out.println(result);
-//        return result.getBody();
-//    }
-
     private void setPaymentForReservations(List<ReservationResponseDTO> reservations) throws URISyntaxException {
         for(ReservationResponseDTO r: reservations){
             try {

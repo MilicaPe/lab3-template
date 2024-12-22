@@ -117,7 +117,7 @@ public class ReservationServiceLogic {
         } catch (PaymentServiceException e) {
             throw new PaymentServiceException();
         } catch (LoyaltyServiceException | LoyaltyException e) {
-            redisService.set("loyality", username);
+            redisService.set("loyalty", username);
             throw new LoyaltyException();
         }
     }
@@ -129,6 +129,7 @@ public class ReservationServiceLogic {
         while (true) {
             String username = null;
             username = redisService.get("loyalty"); // Извлекаем из начала очереди
+            System.out.println("USERNAME iz oceredi > " + username);
             if (username == null) {
                 Thread.sleep(1000); // Пауза на 1 секунду, если очередь пуста
                 continue;
@@ -136,8 +137,11 @@ public class ReservationServiceLogic {
             try {
                 System.out.println("naknadni upit ka loyalty >>> " + username);
                 loyaltyService.subtractBooking(username);// probaj  poyovi metodu sa tim username i to je to
+                System.out.println("!!! USPESNO !!!!");
             }catch (LoyaltyServiceException  | LoyaltyException e){
+                System.out.println("NE, vrati u red, " + username);
                 redisService.set("loyalty", username);
+                Thread.sleep(2000);
             }
 
         }
