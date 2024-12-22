@@ -123,25 +123,25 @@ public class ReservationServiceLogic {
     }
 
 
-//    @Scheduled(initialDelayString = "${greeting.initialdelay}", fixedRateString = "${greeting.fixedrate}")
-//    public void tryToSendRequestsFromQueue() throws InterruptedException, URISyntaxException {
-//        System.out.println("Praznjenje reda");
-//        while (true) {
-//            String username = null;
-//            username = redisService.get("loyalty"); // Извлекаем из начала очереди
-//            if (username == null) {
-//                Thread.sleep(1000); // Пауза на 1 секунду, если очередь пуста
-//                continue;
-//            }
-//            try {
-//                loyaltyService.subtractBooking(username);// probaj  poyovi metodu sa tim username i to je to
-//                // uspesno ---- ukloni iz reda
-//            }catch (LoyaltyServiceException  | LoyaltyException e){
-//                redisService.set("loyalty", username);
-//            }
-//
-//        }
-//    }
+    @Scheduled(initialDelayString = "${greeting.initialdelay}", fixedRateString = "${greeting.fixedrate}")
+    public void tryToSendRequestsFromQueue() throws InterruptedException, URISyntaxException {
+        System.out.println("Praznjenje reda");
+        while (true) {
+            String username = null;
+            username = redisService.get("loyalty"); // Извлекаем из начала очереди
+            if (username == null) {
+                Thread.sleep(1000); // Пауза на 1 секунду, если очередь пуста
+                continue;
+            }
+            try {
+                System.out.println("naknadni upit ka loyalty >>> " + username);
+                loyaltyService.subtractBooking(username);// probaj  poyovi metodu sa tim username i to je to
+            }catch (LoyaltyServiceException  | LoyaltyException e){
+                redisService.set("loyalty", username);
+            }
+
+        }
+    }
 
 
 }
